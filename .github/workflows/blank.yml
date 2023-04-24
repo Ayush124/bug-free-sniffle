@@ -16,15 +16,3 @@ jobs:
         run: ./gradlew build
       - name: Run tests
         run: ./gradlew test
-  deploy:
-    needs: build
-    runs-on: self-hosted
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Set up SSH keys
-        uses: webfactory/ssh-agent@v0.5.0
-        with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-      - name: Deploy to production
-        run: ssh user@server "cd /var/www && git pull && ./gradlew deploy"
